@@ -8,17 +8,19 @@ import { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import Message from '../../components/message/Message'
 import useUser from '../../hooks/useUser'
+import useMessage from '../../hooks/useMessage'
 
 export default function Chat() {
   const [message, setMessage] = useState('')
 
   const history = useHistory()
   const { username, roomName, leaveRoom } = useUser()
+  const { sendMessage } = useMessage()
 
   const handleMessageChange = (e) => setMessage(e.target.value)
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log({ message, username, roomName })
+    sendMessage({ username, roomName, message })
   }
 
   const handleLeaveRoom = () => {

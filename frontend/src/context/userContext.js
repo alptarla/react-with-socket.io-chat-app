@@ -1,4 +1,4 @@
-import { createContext, useContext, useReducer } from 'react'
+import { createContext, useReducer } from 'react'
 import useLocalStorage from '../hooks/useLocalStorage'
 
 const JOIN_ROOM = 'JOIN_ROOM'
@@ -28,7 +28,7 @@ const reducer = (state = initialState, action) => {
   }
 }
 
-export const AuthContext = createContext()
+export const userContext = createContext()
 
 export default function UserProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState)
@@ -44,8 +44,8 @@ export default function UserProvider({ children }) {
   }
 
   return (
-    <AuthContext.Provider value={{ joinUser, leaveRoom, ...state }}>
+    <userContext.Provider value={{ joinUser, leaveRoom, ...state }}>
       {children}
-    </AuthContext.Provider>
+    </userContext.Provider>
   )
 }

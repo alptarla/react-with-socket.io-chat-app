@@ -3,14 +3,17 @@ import ReactDOM from 'react-dom'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
 import { BrowserRouter } from 'react-router-dom'
-import AuthProvider from './context/userContext'
+import UserProvider from './context/userContext'
+import MessageProvider from './context/messageContext'
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <AuthProvider>
-        <App />
-      </AuthProvider>
+      <UserProvider>
+        <MessageProvider>
+          <App />
+        </MessageProvider>
+      </UserProvider>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
