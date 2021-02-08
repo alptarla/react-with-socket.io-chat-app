@@ -20,16 +20,18 @@
 }
 
 .profileImage {
-  width: 75px;
-  height: 75px;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  margin-bottom: 0.5rem;
 }
 
-.username {
+.roomName {
   font-weight: bold;
   font-size: 14px;
 }
 
-.roomName {
+.username {
   font-size: 14px;
   color: #8b9aa6;
 }
@@ -55,6 +57,14 @@
   overflow-y: auto;
   height: 300px;
   padding: 0 2em;
+  text-align: center;
+}
+
+.messageList > small {
+  font-size: 12px;
+  padding: 0 0.5rem 0.3rem 0.5rem;
+  border-bottom: 1px solid red;
+  margin-bottom: 2rem;
 }
 
 .messageForm {

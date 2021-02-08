@@ -3,21 +3,23 @@ import { useState } from 'react'
 import RoomCard from '../../components/roomCard/RoomCard'
 import { useHistory } from 'react-router-dom'
 import useUser from '../../hooks/useUser'
-
-const rooms = ['Web Development', 'Mobile Development', 'DevOps', 'UI/UX']
+import rooms from '../../data/rooms'
 
 export default function Landing() {
   const [username, setUsername] = useState('')
-  const [activeRoom, setActiveRoom] = useState('Web Development')
+  const [activeRoom, setActiveRoom] = useState(rooms[0])
 
   const history = useHistory()
+
   const { joinUser } = useUser()
 
   const handleUsernameChange = (e) => setUsername(e.target.value)
-  const handleRoomNameClick = (e) => setActiveRoom(e.target.name)
+  const handleRoomNameClick = (e) => {
+    setActiveRoom(rooms.find((room) => room.name === e.target.name))
+  }
   const handleSubmit = (e) => {
     e.preventDefault()
-    joinUser({ username, roomName: activeRoom })
+    joinUser({ username, room: activeRoom })
     history.push('/chat')
   }
 
@@ -41,9 +43,9 @@ export default function Landing() {
           {rooms.map((room, index) => (
             <RoomCard
               key={index}
-              roomName={room}
+              room={room}
               handleRoomNameClick={handleRoomNameClick}
-              isActive={room === activeRoom}
+              isActive={room.name === activeRoom.name}
             />
           ))}
         </div>

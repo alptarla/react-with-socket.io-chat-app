@@ -1,14 +1,14 @@
 import styles from './RoomCard.module.css'
 
-export default function RoomCard({ roomName, handleRoomNameClick, isActive }) {
+export default function RoomCard({ room, handleRoomNameClick, isActive }) {
   return (
     <button
       className={`${styles.roomBtn} ${isActive ? styles.active : null}`}
-      name={roomName}
+      name={room.name}
       onClick={handleRoomNameClick}
       type='button'
     >
-      {roomName}
+      {room.name}
     </button>
   )
 }

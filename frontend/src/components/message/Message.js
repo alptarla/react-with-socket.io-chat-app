@@ -1,13 +1,22 @@
 import styles from './Message.module.css'
 
-export default function Message({ profileImage, message, isPrimary }) {
+export default function Message({
+  profileImage,
+  message,
+  username,
+  isPrimary,
+}) {
   return (
     <div
       className={`${styles.message} ${
         isPrimary ? styles.primaryMessage : styles.secondaryMessage
       }`}
     >
-      {!isPrimary ? <img src={profileImage} alt='profile' /> : null}
+      {!isPrimary ? (
+        <div className={styles.messageProfile}>
+          <img src={profileImage} alt='profile' /> <small>{username}</small>
+        </div>
+      ) : null}
       <div>
         <p className={styles.messageContent}>{message}</p>
         <small className={styles.date}>Today | 16:36</small>

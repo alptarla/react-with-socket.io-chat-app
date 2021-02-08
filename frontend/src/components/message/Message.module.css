@@ -4,10 +4,21 @@
   padding-bottom: 0.5em;
 }
 
-.message img {
+.messageProfile {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 1em 1em 0 0;
+}
+
+.messageProfile img {
   width: 30px;
   height: 32px;
-  margin: 1em 1em 0 0;
+}
+
+.messageProfile small {
+  font-size: 12px;
 }
 
 .messageContent {
