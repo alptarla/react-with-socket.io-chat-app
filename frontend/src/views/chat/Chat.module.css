@@ -1,0 +1,102 @@
+.chatContainer {
+  max-width: 700px;
+  width: 100%;
+  margin: 1em auto;
+  padding: 0.2em 2em;
+}
+
+.chatHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 0.5em;
+}
+
+.userInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.profileImage {
+  width: 75px;
+  height: 75px;
+}
+
+.username {
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.roomName {
+  font-size: 14px;
+  color: #8b9aa6;
+}
+
+.btn {
+  border: none;
+  outline: none;
+  background: none;
+  cursor: pointer;
+}
+
+.chevronLeftBtn img {
+  width: 12px;
+  height: 24px;
+}
+
+.moreBtn img {
+  width: 12px;
+  height: 24px;
+}
+
+.messageList {
+  overflow-y: auto;
+  height: 300px;
+  padding: 0 2em;
+}
+
+.messageForm {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.plusBtn {
+  background: #6bc904;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.plusBtn img {
+  width: 20px;
+  height: 15px;
+}
+
+.messageForm input {
+  width: 100%;
+  height: 50px;
+  padding: 1em 2em;
+  border: none;
+  outline: none;
+  background: rgba(139, 154, 166, 0.1);
+  border-radius: 30px;
+  margin: 0 2em;
+  font-size: 14px;
+}
+
+.messageForm input::placeholder {
+  font-size: 14px;
+  color: #8b9aa6;
+}
+
+.sendBtn img {
+  width: 28px;
+  height: 28px;
+}
