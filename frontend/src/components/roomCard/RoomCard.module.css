@@ -1,0 +1,17 @@
+.roomBtn {
+  border: none;
+  outline: none;
+  border-radius: 10px;
+  cursor: pointer;
+  padding: 1em 2em;
+  margin: 10px;
+  transition: box-shadow 0.3s;
+}
+
+.roomBtn:hover {
+  box-shadow: 0px 11px 14px -10px rgba(46, 51, 54, 0.848804);
+}
+
+.active {
+  border: 2px solid #6bc904;
+}
