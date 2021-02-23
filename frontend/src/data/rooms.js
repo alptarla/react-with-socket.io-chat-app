@@ -7,7 +7,7 @@ const rooms = [
   { name: 'Web Development', profileImage: webDevelopmentImage },
   { name: 'Mobile Development', profileImage: mobileDevelopmentImage },
   { name: 'DevOps', profileImage: devopsImage },
-  { name: 'UI/Ux', profileImage: uiUxImage },
+  { name: 'UI/UX', profileImage: uiUxImage },
 ]
 
 export default rooms

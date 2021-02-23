@@ -5,6 +5,7 @@ export default function Message({
   message,
   username,
   isPrimary,
+  createdAt,
 }) {
   return (
     <div
@@ -19,7 +20,7 @@ export default function Message({
       ) : null}
       <div>
         <p className={styles.messageContent}>{message}</p>
-        <small className={styles.date}>Today | 16:36</small>
+        <small className={styles.date}>{createdAt}</small>
       </div>
     </div>
   )

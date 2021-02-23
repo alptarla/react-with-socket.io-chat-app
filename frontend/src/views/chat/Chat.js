@@ -9,6 +9,7 @@ import { Redirect, useHistory } from 'react-router-dom'
 import Message from '../../components/message/Message'
 import useUser from '../../hooks/useUser'
 import useMessage from '../../hooks/useMessage'
+import moment from 'moment'
 
 export default function Chat() {
   const [message, setMessage] = useState('')
@@ -27,7 +28,7 @@ export default function Chat() {
   const handleMessageChange = (e) => setMessage(e.target.value)
   const handleSubmit = (e) => {
     e.preventDefault()
-    sendMessage({ username, room, message })
+    sendMessage({ username, room, message, createdAt: new Date() })
     setMessage('')
   }
 
@@ -36,6 +37,8 @@ export default function Chat() {
     removeMessages()
     history.push('/')
   }
+
+  const formatDate = (date) => moment(date).calendar()
 
   if (!isLoggedIn) return <Redirect to='/' />
 
@@ -61,7 +64,6 @@ export default function Chat() {
           <img src={moreIcon} alt='more icon' />
         </button>
       </div>
-
       <div className={styles.messageList} ref={messageListRef}>
         {infoMessage !== '' ? <small>{infoMessage}</small> : null}
         {messages?.map((item, index) => (
@@ -71,10 +73,10 @@ export default function Chat() {
             username={item.username}
             isPrimary={item.username === username}
             profileImage={defaultUserProfile}
+            createdAt={formatDate(item.createdAt)}
           />
         ))}
       </div>
-
       <div className={styles.chatAction}>
         <form onSubmit={handleSubmit} className={styles.messageForm}>
           <button className={`${styles.plusBtn} ${styles.btn}`} type='button'>
