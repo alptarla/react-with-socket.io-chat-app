@@ -7,17 +7,34 @@ import sendIcon from '../../assets/send.svg'
 import { useEffect, useRef, useState } from 'react'
 import { Redirect, useHistory } from 'react-router-dom'
 import Message from '../../components/message/Message'
-import useUser from '../../hooks/useUser'
-import useMessage from '../../hooks/useMessage'
 import moment from 'moment'
+import { useDispatch, useSelector } from 'react-redux'
+import socketService from '../../services/socketService'
+import { addMessage, selectMessage } from '../../slices/messageSlice'
+import { v4 as uuid } from 'uuid'
+import { leaveRoom, selectRoom, setInfoMessage } from '../../slices/roomSlice'
 
 export default function Chat() {
   const [message, setMessage] = useState('')
 
-  const { username, room, leaveRoom, infoMessage, isLoggedIn } = useUser()
-  const { sendMessage, messages, removeMessages } = useMessage()
-
   const history = useHistory()
+  const dispatch = useDispatch()
+
+  const socket = socketService.socket
+  useEffect(() => {
+    socket.on('message', (message) => {
+      dispatch(addMessage(message))
+    })
+
+    socket.on('infoMessage', (message) => {
+      dispatch(setInfoMessage(message))
+    })
+
+    return () => socket.disconnect()
+  }, [dispatch, socket])
+
+  const { username, room, isLoggedIn, infoMessage } = useSelector(selectRoom)
+  const { messages } = useSelector(selectMessage)
 
   const messageListRef = useRef(null)
   useEffect(() => {
@@ -26,15 +43,26 @@ export default function Chat() {
   }, [messages])
 
   const handleMessageChange = (e) => setMessage(e.target.value)
+
   const handleSubmit = (e) => {
     e.preventDefault()
-    sendMessage({ username, room, message, createdAt: new Date() })
+
+    socketService.sendMessage({
+      username,
+      room,
+      message,
+      createdAt: new Date(),
+      id: uuid(),
+    })
+
     setMessage('')
   }
 
   const handleLeaveRoom = () => {
-    leaveRoom()
-    removeMessages()
+    dispatch(leaveRoom())
+
+    // todo: remove stored messages
+
     history.push('/')
   }
 
@@ -65,7 +93,7 @@ export default function Chat() {
         </button>
       </div>
       <div className={styles.messageList} ref={messageListRef}>
-        {infoMessage !== '' ? <small>{infoMessage}</small> : null}
+        {infoMessage ? <small>{infoMessage}</small> : null}
         {messages?.map((item, index) => (
           <Message
             key={index}

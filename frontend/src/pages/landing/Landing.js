@@ -2,24 +2,28 @@ import styles from './Landing.module.css'
 import { useState } from 'react'
 import RoomCard from '../../components/roomCard/RoomCard'
 import { useHistory } from 'react-router-dom'
-import useUser from '../../hooks/useUser'
 import rooms from '../../data/rooms'
+import { useDispatch } from 'react-redux'
+import { joinRoom } from '../../slices/roomSlice'
 
 export default function Landing() {
   const [username, setUsername] = useState('')
   const [activeRoom, setActiveRoom] = useState(rooms[0])
 
+  const dispatch = useDispatch()
   const history = useHistory()
-
-  const { joinUser } = useUser()
 
   const handleUsernameChange = (e) => setUsername(e.target.value)
   const handleRoomNameClick = (e) => {
-    setActiveRoom(rooms.find((room) => room.name === e.target.name))
+    const activeRoom = rooms.find((room) => room.name === e.target.name)
+    setActiveRoom(activeRoom)
   }
+
   const handleSubmit = (e) => {
     e.preventDefault()
-    joinUser({ username, room: activeRoom })
+
+    dispatch(joinRoom({ username, room: activeRoom }))
+
     history.push('/chat')
   }
 
