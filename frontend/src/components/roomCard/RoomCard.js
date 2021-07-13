@@ -1,14 +1,27 @@
+import classnames from 'classnames'
+import PropTypes from 'prop-types'
 import styles from './RoomCard.module.css'
 
-export default function RoomCard({ room, handleRoomNameClick, isActive }) {
+export default function RoomCard({ roomName, handleRoomClick, isActive }) {
+  const cardClass = classnames(styles.roomBtn, { [styles.active]: isActive })
+
   return (
     <button
-      className={`${styles.roomBtn} ${isActive ? styles.active : null}`}
-      name={room.name}
-      onClick={handleRoomNameClick}
+      className={cardClass}
+      onClick={() => handleRoomClick(roomName)}
       type='button'
     >
-      {room.name}
+      {roomName}
     </button>
   )
+}
+
+RoomCard.propTypes = {
+  roomName: PropTypes.string.isRequired,
+  handleRoomClick: PropTypes.func.isRequired,
+  isActive: PropTypes.bool,
+}
+
+RoomCard.defaultProps = {
+  isActive: false,
 }

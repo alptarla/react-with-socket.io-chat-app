@@ -1,10 +1,10 @@
-import styles from './Landing.module.css'
 import { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { Redirect, useHistory } from 'react-router-dom'
 import RoomCard from '../../components/roomCard/RoomCard'
-import { useHistory } from 'react-router-dom'
 import rooms from '../../data/rooms'
-import { useDispatch } from 'react-redux'
-import { joinRoom } from '../../slices/roomSlice'
+import { joinRoom, selectRoom } from '../../slices/roomSlice'
+import styles from './Landing.module.css'
 
 export default function Landing() {
   const [username, setUsername] = useState('')
@@ -12,10 +12,11 @@ export default function Landing() {
 
   const dispatch = useDispatch()
   const history = useHistory()
+  const { isLoggedIn } = useSelector(selectRoom)
 
   const handleUsernameChange = (e) => setUsername(e.target.value)
-  const handleRoomNameClick = (e) => {
-    const activeRoom = rooms.find((room) => room.name === e.target.name)
+  const handleRoomClick = (roomName) => {
+    const activeRoom = rooms.find((room) => room.name === roomName)
     setActiveRoom(activeRoom)
   }
 
@@ -26,6 +27,8 @@ export default function Landing() {
 
     history.push('/chat')
   }
+
+  if (isLoggedIn) return <Redirect to='/chat' />
 
   return (
     <div className={styles.chatFormContainer}>
@@ -47,9 +50,10 @@ export default function Landing() {
           {rooms.map((room, index) => (
             <RoomCard
               key={index}
-              room={room}
-              handleRoomNameClick={handleRoomNameClick}
-              isActive={room.name === activeRoom.name}
+              roomName={room.name}
+              handleRoomClick={handleRoomClick}
+              isActive={room.name === activeRoom?.name}
+              room={activeRoom}
             />
           ))}
         </div>

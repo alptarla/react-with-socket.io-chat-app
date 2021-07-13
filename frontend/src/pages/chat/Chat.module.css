@@ -36,23 +36,6 @@
   color: #8b9aa6;
 }
 
-.btn {
-  border: none;
-  outline: none;
-  background: none;
-  cursor: pointer;
-}
-
-.chevronLeftBtn img {
-  width: 12px;
-  height: 24px;
-}
-
-.moreBtn img {
-  width: 12px;
-  height: 24px;
-}
-
 .messageList {
   overflow-y: auto;
   height: 300px;
@@ -74,19 +57,8 @@
   margin-top: 1rem;
 }
 
-.plusBtn {
-  background: #6bc904;
-  width: 35px;
-  height: 35px;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.plusBtn img {
-  width: 20px;
-  height: 15px;
+.plusIcon {
+  color: #6bc904;
 }
 
 .messageForm input {
@@ -104,9 +76,4 @@
 .messageForm input::placeholder {
   font-size: 14px;
   color: #8b9aa6;
-}
-
-.sendBtn img {
-  width: 28px;
-  height: 28px;
 }

@@ -1,18 +1,18 @@
-import styles from './Chat.module.css'
-import chevronLeftIcon from '../../assets/chevron-left.svg'
-import moreIcon from '../../assets/more-vertical.svg'
-import defaultUserProfile from '../../assets/defaultUserProfile.png'
-import plusIcon from '../../assets/plus.svg'
-import sendIcon from '../../assets/send.svg'
+import classnames from 'classnames'
 import { useEffect, useRef, useState } from 'react'
-import { Redirect, useHistory } from 'react-router-dom'
-import Message from '../../components/message/Message'
-import moment from 'moment'
 import { useDispatch, useSelector } from 'react-redux'
-import socketService from '../../services/socketService'
-import { addMessage, selectMessage } from '../../slices/messageSlice'
+import { Redirect, useHistory } from 'react-router-dom'
 import { v4 as uuid } from 'uuid'
+import defaultUserProfile from '../../assets/defaultUserProfile.png'
+import Message from '../../components/message/Message'
+import socketService from '../../services/socketService'
+import {
+  addMessage,
+  selectMessage,
+  setMessages,
+} from '../../slices/messageSlice'
 import { leaveRoom, selectRoom, setInfoMessage } from '../../slices/roomSlice'
+import styles from './Chat.module.css'
 
 export default function Chat() {
   const [message, setMessage] = useState('')
@@ -22,6 +22,8 @@ export default function Chat() {
 
   const socket = socketService.socket
   useEffect(() => {
+    if (!socket) return
+
     socket.on('message', (message) => {
       dispatch(addMessage(message))
     })
@@ -60,56 +62,49 @@ export default function Chat() {
 
   const handleLeaveRoom = () => {
     dispatch(leaveRoom())
-
-    // todo: remove stored messages
-
+    dispatch(setMessages([]))
     history.push('/')
   }
-
-  const formatDate = (date) => moment(date).calendar()
 
   if (!isLoggedIn) return <Redirect to='/' />
 
   return (
     <div className={styles.chatContainer}>
       <div className={styles.chatHeader}>
-        <button
-          className={`${styles.chevronLeftBtn} ${styles.btn}`}
+        <i
+          className='fas fa-chevron-left fa-2x icon-btn'
           onClick={handleLeaveRoom}
-        >
-          <img src={chevronLeftIcon} alt='chevron left icon' />
-        </button>
+        />
         <div className={styles.userInfo}>
           <img
             src={room.profileImage}
-            alt='profile'
+            alt={room.name}
             className={styles.profileImage}
           />
           <strong className={styles.roomName}>{room.name}</strong>
           <span className={styles.username}>{username}</span>
         </div>
-        <button className={`${styles.moreBtn} ${styles.btn}`}>
-          <img src={moreIcon} alt='more icon' />
-        </button>
+        <i className='fas fa-ellipsis-v fa-2x icon-btn' />
       </div>
       <div className={styles.messageList} ref={messageListRef}>
-        {infoMessage ? <small>{infoMessage}</small> : null}
+        {infoMessage && <small>{infoMessage}</small>}
         {messages?.map((item, index) => (
           <Message
             key={index}
-            message={item.message}
-            username={item.username}
-            isPrimary={item.username === username}
+            message={item}
+            isPrimary={username === item.username}
             profileImage={defaultUserProfile}
-            createdAt={formatDate(item.createdAt)}
           />
         ))}
       </div>
       <div className={styles.chatAction}>
         <form onSubmit={handleSubmit} className={styles.messageForm}>
-          <button className={`${styles.plusBtn} ${styles.btn}`} type='button'>
-            <img src={plusIcon} alt='plus icon' />
-          </button>
+          <i
+            className={classnames(
+              'fas fa-plus-circle fa-2x icon-btn',
+              styles.plusIcon
+            )}
+          />
           <input
             type='text'
             name='message'
@@ -118,9 +113,10 @@ export default function Chat() {
             onChange={handleMessageChange}
             required
           />
-          <button className={`${styles.sendBtn} ${styles.btn}`} type='submit'>
-            <img src={sendIcon} alt='send icon' />
-          </button>
+          <i
+            className='fas fa-paper-plane icon-btn fa-2x'
+            onClick={handleSubmit}
+          />
         </form>
       </div>
     </div>

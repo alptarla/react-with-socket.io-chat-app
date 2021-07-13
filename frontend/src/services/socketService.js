@@ -7,6 +7,7 @@ const socketService = {
     this.socket = io('http://localhost:5000')
   },
   joinRoom(username, room) {
+    this.socket.open()
     this.socket.emit('join', { username, room })
   },
   leaveRoom() {

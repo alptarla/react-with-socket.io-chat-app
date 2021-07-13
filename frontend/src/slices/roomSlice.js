@@ -28,6 +28,7 @@ const roomSlice = createSlice({
       state.infoMessage = null
 
       localStorage.removeItem('room')
+      localStorage.removeItem('messages')
 
       socketService.leaveRoom()
     },

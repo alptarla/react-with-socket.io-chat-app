@@ -5,7 +5,7 @@ export default function Header() {
     <div className={styles.headerContainer}>
       <div className={styles.navbar}>
         <div className={styles.navbarBrand}>
-          <i className='far fa-comments fa-2x'></i>
+          <i className='far fa-comments fa-2x' />
           <span>ChatApp</span>
         </div>
       </div>

@@ -33,3 +33,7 @@ img {
   margin: auto;
   padding: 1em 2em;
 }
+
+.icon-btn {
+  cursor: pointer;
+}
